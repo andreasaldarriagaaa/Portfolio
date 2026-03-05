@@ -1,0 +1,2483 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Andrea Saldarriaga Cadavid — Marketing Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ========== CSS VARIABLES ========== */
+    :root {
+      --cream: #D4CBC4;
+      --cream-light: #E8E2DD;
+      --cream-pale: #F3EFEC;
+      --cream-dark: #B8AFA8;
+      --wine: #48182F;
+      --wine-light: #6B2D4A;
+      --wine-dark: #350F22;
+      --white: #FAFAF8;
+      --black: #1A1A1A;
+      --font-main: 'League Spartan', sans-serif;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* ========== RESET & BASE ========== */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+      cursor: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      cursor: none;
+    }
+
+    button {
+      cursor: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    ::selection {
+      background: var(--wine);
+      color: var(--cream-light);
+    }
+
+    /* ========== CUSTOM CURSOR ========== */
+    .cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      background: var(--wine);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s var(--ease-out-expo),
+        height 0.3s var(--ease-out-expo),
+        background 0.3s;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid var(--wine);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s var(--ease-out-expo),
+        height 0.4s var(--ease-out-expo),
+        opacity 0.3s;
+      opacity: 0.5;
+    }
+
+    .cursor-dot.hovering {
+      width: 50px;
+      height: 50px;
+      background: rgba(72, 24, 47, 0.12);
+    }
+
+    .cursor-ring.hovering {
+      width: 60px;
+      height: 60px;
+      opacity: 0;
+    }
+
+    /* ========== PRELOADER ========== */
+    .preloader {
+      position: fixed;
+      inset: 0;
+      background: var(--wine-dark);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s var(--ease-out-expo), visibility 0.8s;
+    }
+
+    .preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .preloader-text {
+      font-family: var(--font-main);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      color: var(--cream-light);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      overflow: hidden;
+    }
+
+    .preloader-text span {
+      display: inline-block;
+      animation: slideUp 0.6s var(--ease-out-expo) forwards;
+      opacity: 0;
+      transform: translateY(100%);
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========== NAVIGATION ========== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      mix-blend-mode: difference;
+    }
+
+    .nav-logo {
+      font-family: var(--font-main);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-main);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--cream);
+      transition: width 0.4s var(--ease-out-expo);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Hamburger button */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 28px;
+      height: 28px;
+      background: none;
+      border: none;
+      padding: 0;
+      z-index: 1002;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: transform 0.4s var(--ease-out-expo),
+        opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile menu overlay */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--wine-dark);
+      z-index: 1001;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s var(--ease-out-expo),
+        visibility 0.5s;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu a {
+      font-family: var(--font-main);
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+      font-weight: 800;
+      color: var(--cream-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.8rem 0;
+      position: relative;
+      transition: color 0.3s;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .mobile-menu.open a {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu a:nth-child(1) { transition: opacity 0.4s 0.1s, transform 0.4s 0.1s, color 0.3s; }
+    .mobile-menu a:nth-child(2) { transition: opacity 0.4s 0.15s, transform 0.4s 0.15s, color 0.3s; }
+    .mobile-menu a:nth-child(3) { transition: opacity 0.4s 0.2s, transform 0.4s 0.2s, color 0.3s; }
+    .mobile-menu a:nth-child(4) { transition: opacity 0.4s 0.25s, transform 0.4s 0.25s, color 0.3s; }
+    .mobile-menu a:nth-child(5) { transition: opacity 0.4s 0.3s, transform 0.4s 0.3s, color 0.3s; }
+
+    .mobile-menu a:hover {
+      color: #fff;
+    }
+
+    .mobile-lang-switcher {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .mobile-menu.open .mobile-lang-switcher {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.4s 0.4s, transform 0.4s 0.4s;
+    }
+
+    .mobile-lang-switcher .lang-btn {
+      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+      border-color: rgba(212,203,196,0.3);
+      color: var(--cream-light);
+    }
+
+    .mobile-lang-switcher .lang-btn.active {
+      background: rgba(212,203,196,0.2);
+      border-color: var(--cream);
+    }
+
+    /* ========== SCROLL REVEAL ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 0.9s var(--ease-out-expo),
+        transform 0.9s var(--ease-out-expo);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-80px);
+      transition: opacity 0.9s var(--ease-out-expo),
+        transform 0.9s var(--ease-out-expo);
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(80px);
+      transition: opacity 0.9s var(--ease-out-expo),
+        transform 0.9s var(--ease-out-expo);
+    }
+
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.7s var(--ease-out-expo),
+        transform 0.7s var(--ease-out-expo);
+    }
+
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -15%;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(212, 203, 196, 0.5) 0%, transparent 65%);
+      border-radius: 50%;
+      animation: floatBlob 12s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -15%;
+      left: -10%;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(72, 24, 47, 0.06) 0%, transparent 65%);
+      border-radius: 50%;
+      animation: floatBlob 15s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatBlob {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(30px, -30px) scale(1.05);
+      }
+
+      66% {
+        transform: translate(-20px, 20px) scale(0.95);
+      }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--wine);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 10vw, 9rem);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+      text-transform: uppercase;
+    }
+
+    .hero-name .accent {
+      color: var(--wine);
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+      font-weight: 400;
+      color: var(--cream-dark);
+      max-width: 520px;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 1;
+    }
+
+    .hero-scroll-indicator span {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cream-dark);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--wine), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+
+      50% {
+        opacity: 0.3;
+        transform: scaleY(0.5);
+      }
+    }
+
+    /* ========== DIVIDER ========== */
+    .color-strip {
+      height: 3px;
+      background: linear-gradient(90deg, var(--cream), var(--wine), var(--cream-dark), var(--wine-light), var(--cream));
+      background-size: 300% 100%;
+      animation: gradientMove 8s linear infinite;
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 300% 50%;
+      }
+    }
+
+    /* ========== SECTION SHARED ========== */
+    section {
+      padding: 7rem 3rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--wine);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: var(--black);
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--cream-dark);
+      max-width: 550px;
+      line-height: 1.6;
+    }
+
+    /* ========== STATS ========== */
+    .stats-strip {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      padding: 4rem 2rem;
+      background: var(--cream-pale);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--wine);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream-dark);
+      margin-top: 0.5rem;
+    }
+
+    /* ========== PROJECTS / GALLERY ========== */
+    #proyectos {
+      background: var(--white);
+    }
+
+    .gallery-header {
+      max-width: 1400px;
+      margin: 0 auto 3rem;
+    }
+
+    /* ALIGNED UNIFORM GRID */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      background: var(--cream-pale);
+      transition: transform 0.5s var(--ease-out-expo),
+        box-shadow 0.5s var(--ease-out-expo);
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(72, 24, 47, 0.15);
+    }
+
+    .project-card img {
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+
+    .project-card:hover img {
+      transform: scale(1.08);
+    }
+
+    /* overlay removed - clean hover effect only */
+
+    /* ========== EXPERIENCE SECTION ========== */
+    #experiencia {
+      background: var(--wine-dark);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #experiencia::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(212, 203, 196, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    #experiencia .section-label {
+      color: var(--cream);
+    }
+
+    #experiencia .section-title {
+      color: #fff;
+    }
+
+    #experiencia .section-subtitle {
+      color: rgba(212, 203, 196, 0.6);
+    }
+
+    .exp-header {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+    }
+
+    .exp-timeline {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Timeline center line */
+    .exp-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--cream-dark), var(--cream-dark), transparent);
+      transform: translateX(-50%);
+    }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      align-items: start;
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    .exp-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Timeline dot */
+    .exp-dot-col {
+      display: flex;
+      justify-content: center;
+      padding-top: 0.5rem;
+    }
+
+    .exp-dot {
+      width: 14px;
+      height: 14px;
+      background: var(--wine-light);
+      border: 3px solid var(--cream);
+      border-radius: 50%;
+      position: relative;
+      z-index: 2;
+      transition: transform 0.3s var(--ease-out-expo),
+        background 0.3s;
+    }
+
+    .exp-item:hover .exp-dot {
+      transform: scale(1.4);
+      background: var(--cream);
+    }
+
+    /* Left side - company info */
+    .exp-company {
+      text-align: right;
+      padding-right: 2rem;
+    }
+
+    .exp-company-name {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #fff;
+      margin-bottom: 0.3rem;
+      transition: color 0.3s;
+    }
+
+    .exp-item:hover .exp-company-name {
+      color: var(--cream);
+    }
+
+    .exp-role {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--cream);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .exp-date {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: rgba(212, 203, 196, 0.4);
+      letter-spacing: 0.1em;
+    }
+
+    /* Right side - description */
+    .exp-details {
+      padding-left: 2rem;
+    }
+
+    .exp-description {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.65);
+      margin-bottom: 1rem;
+    }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .exp-tag {
+      padding: 0.35rem 0.9rem;
+      border: 1px solid rgba(212, 203, 196, 0.2);
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: rgba(212, 203, 196, 0.6);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .exp-tag:hover {
+      background: var(--cream);
+      border-color: var(--cream);
+      color: var(--wine-dark);
+    }
+
+    /* ========== ABOUT ========== */
+    #sobre-mi {
+      background: var(--cream-pale);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-image-wrapper {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--cream);
+    }
+
+    .about-image-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border: 3px solid var(--wine);
+      border-radius: 12px;
+      pointer-events: none;
+      opacity: 0.2;
+    }
+
+    .about-text .section-title {
+      color: var(--black);
+    }
+
+    .about-text .section-title .accent {
+      color: var(--wine);
+    }
+
+    .about-description {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--cream-dark);
+      margin-bottom: 2rem;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .skill-tag {
+      padding: 0.5rem 1.2rem;
+      border: 1.5px solid var(--wine);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--wine);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .skill-tag:hover {
+      background: var(--wine);
+      color: var(--cream-light);
+    }
+
+    /* ========== MARQUEE ========== */
+    .marquee-section {
+      overflow: hidden;
+      padding: 2.5rem 0;
+      background: var(--wine);
+    }
+
+    .marquee-track {
+      display: flex;
+      animation: marquee 22s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-track span {
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      font-weight: 800;
+      white-space: nowrap;
+      padding: 0 1.5rem;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(212, 203, 196, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.3s, -webkit-text-stroke-color 0.3s;
+    }
+
+    .marquee-track span:hover {
+      color: var(--cream);
+      -webkit-text-stroke-color: var(--cream);
+    }
+
+    .marquee-track .dot {
+      color: var(--cream);
+      -webkit-text-stroke: none;
+      padding: 0 0.8rem;
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      display: flex;
+      align-items: center;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* Languages marquee - reverse direction */
+    .marquee-reverse {
+      animation: marqueeReverse 25s linear infinite;
+    }
+
+    .marquee-reverse .lang-item {
+      color: var(--wine);
+      -webkit-text-stroke: 0;
+      font-size: clamp(1.2rem, 2.5vw, 2rem);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    @keyframes marqueeReverse {
+      0% {
+        transform: translateX(-50%);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    /* ========== CONTACT ========== */
+    #contacto {
+      text-align: center;
+      padding: 8rem 3rem;
+      background: var(--white);
+      position: relative;
+    }
+
+    .contact-big-text {
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 2rem;
+      color: var(--black);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-big-text .accent {
+      color: var(--wine);
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-size: clamp(0.9rem, 2vw, 1.3rem);
+      font-weight: 500;
+      color: var(--cream-dark);
+      border-bottom: 2px solid var(--wine);
+      padding-bottom: 4px;
+      margin-bottom: 3rem;
+      transition: color 0.3s;
+      letter-spacing: 0.02em;
+    }
+
+    .contact-email:hover {
+      color: var(--wine);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid var(--cream-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+
+    .social-link:hover {
+      background: var(--wine);
+      border-color: var(--wine);
+      transform: translateY(-4px);
+    }
+
+    .social-link svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--black);
+      transition: fill 0.3s;
+    }
+
+    .social-link:hover svg {
+      fill: var(--cream-light);
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--cream-light);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--cream-dark);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    footer .heart {
+      color: var(--wine);
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 1024px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .exp-timeline::before {
+        left: 30px;
+      }
+
+      .exp-item {
+        grid-template-columns: 60px 1fr;
+      }
+
+      .exp-company {
+        text-align: left;
+        padding-right: 0;
+        padding-left: 0;
+        margin-bottom: 0.5rem;
+      }
+
+      .exp-dot-col {
+        justify-content: center;
+        order: -1;
+      }
+
+      .exp-details {
+        padding-left: 0;
+        grid-column: 2;
+      }
+
+      .exp-company {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .exp-dot-col {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+      }
+
+      .exp-details {
+        grid-column: 2;
+        grid-row: 2;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links,
+      .lang-switcher {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: flex;
+      }
+
+      section {
+        padding: 5rem 1.5rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .about-image-wrapper {
+        max-width: 350px;
+        margin: 0 auto;
+      }
+
+      .cursor-dot,
+      .cursor-ring {
+        display: none;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      .stats-strip {
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .exp-timeline::before {
+        display: none;
+      }
+
+      .exp-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .exp-dot-col {
+        display: none;
+      }
+
+      .exp-company {
+        text-align: left;
+        padding: 0;
+        grid-column: 1;
+      }
+
+      .exp-details {
+        padding: 0;
+        grid-column: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3px;
+      }
+    }
+
+    /* ========== LANGUAGE SWITCHER ========== */
+    .lang-switcher {
+      display: flex;
+      gap: 0.4rem;
+      margin-left: 2rem;
+    }
+
+    .lang-btn {
+      background: none;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-family: var(--font-main);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      transition: background 0.3s, border-color 0.3s;
+      text-transform: uppercase;
+    }
+
+    .lang-btn:hover,
+    .lang-btn.active {
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.7);
+    }
+
+    /* ========== LANGUAGES SECTION ========== */
+    .languages-section {
+      padding: 5rem 3rem;
+      background: var(--cream-pale);
+    }
+
+    .languages-header {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+    }
+
+    .languages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .lang-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.5s var(--ease-out-expo),
+        box-shadow 0.5s var(--ease-out-expo);
+    }
+
+    .lang-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(72, 24, 47, 0.1);
+    }
+
+    .lang-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--wine);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+
+    .lang-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .lang-flag {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .lang-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--black);
+      margin-bottom: 0.3rem;
+    }
+
+    .lang-level {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--wine);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .lang-bar-track {
+      width: 100%;
+      height: 6px;
+      background: var(--cream-light);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .lang-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--wine), var(--wine-light));
+      border-radius: 3px;
+      width: 0;
+      transition: width 1.2s var(--ease-out-expo);
+    }
+
+    .lang-bar-fill.animated {
+      /* width set via data attribute */
+    }
+
+    .lang-cert {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--cream-dark);
+      letter-spacing: 0.05em;
+      margin-top: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+      .languages-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+      .lang-switcher {
+        margin-left: 1rem;
+        gap: 0.25rem;
+      }
+      .lang-btn {
+        font-size: 0.6rem;
+        padding: 0.25rem 0.45rem;
+      }
+    }
+    /* ========== FASHION SHOWCASE ========== */
+    .fashion-showcase {
+      padding: 7rem 3rem;
+      background: var(--cream-pale);
+    }
+
+    .fashion-showcase-header {
+      max-width: 1400px;
+      margin: 0 auto 3rem;
+    }
+
+    .fashion-slide {
+      max-width: 1400px;
+      margin: 0 auto 2rem;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.6s var(--ease-out-expo),
+        box-shadow 0.6s var(--ease-out-expo);
+    }
+
+    .fashion-slide:last-child {
+      margin-bottom: 0;
+    }
+
+    .fashion-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.7s var(--ease-out-expo);
+    }
+
+    .fashion-slide:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 60px rgba(72, 24, 47, 0.12);
+    }
+
+    .fashion-slide:hover img {
+      transform: scale(1.015);
+    }
+
+    @media (max-width: 768px) {
+      .fashion-showcase {
+        padding: 5rem 1rem;
+      }
+      .fashion-slide {
+        border-radius: 8px;
+        margin-bottom: 1rem;
+      }
+    }
+    /* ========== AURORA HERO ========== */
+    .hero {
+      background: var(--wine-dark) !important;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background:
+        radial-gradient(ellipse 80% 80% at 20% 50%, rgba(72, 24, 47, 0.5), transparent),
+        radial-gradient(ellipse 80% 80% at 80% 50%, rgba(107, 45, 74, 0.4), transparent),
+        radial-gradient(ellipse 60% 60% at 50% 0%, rgba(212, 203, 196, 0.12), transparent);
+      animation: aurora 10s ease-in-out infinite alternate;
+      filter: blur(50px);
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background:
+        radial-gradient(ellipse 60% 80% at 60% 40%, rgba(212, 203, 196, 0.08), transparent),
+        radial-gradient(ellipse 80% 60% at 30% 70%, rgba(72, 24, 47, 0.25), transparent);
+      animation: aurora 14s ease-in-out infinite alternate-reverse;
+      filter: blur(60px);
+      z-index: 0;
+    }
+
+    @keyframes aurora {
+      0% { transform: translate(-5%, -5%) rotate(0deg); }
+      50% { transform: translate(5%, 5%) rotate(180deg); }
+      100% { transform: translate(-3%, 3%) rotate(360deg); }
+    }
+
+    .aurora-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #particleCanvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero .hero-subtitle,
+    .hero .hero-name,
+    .hero .hero-tagline,
+    .hero .hero-scroll-indicator span {
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero .hero-name {
+      color: var(--cream-light);
+    }
+
+    .hero .hero-name .accent {
+      color: var(--cream);
+    }
+
+    .hero .hero-subtitle {
+      color: var(--cream);
+    }
+
+    .hero .hero-tagline {
+      color: rgba(212, 203, 196, 0.6);
+    }
+
+    .hero .scroll-line {
+      background: linear-gradient(to bottom, var(--cream), transparent);
+    }
+
+    .hero .hero-scroll-indicator {
+      z-index: 3;
+    }
+
+    /* ========== GLASS PREMIUM ========== */
+    .glass-premium {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 0 0 0.5px rgba(255,255,255,0.05) inset,
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-premium::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    .glass-premium::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.08) 70%, transparent);
+    }
+
+    /* Glass on stat items */
+    .stats-strip {
+      background: var(--wine-dark) !important;
+      position: relative;
+    }
+
+    .stat-item {
+      background: rgba(212, 203, 196, 0.05);
+      backdrop-filter: blur(16px) saturate(160%);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      border: 1px solid rgba(212, 203, 196, 0.1);
+      border-radius: 16px;
+      padding: 2rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    .stat-item::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212,203,196,0.2) 30%, rgba(212,203,196,0.1) 70%, transparent);
+    }
+
+    .stat-number {
+      color: var(--cream) !important;
+    }
+
+    .stat-label {
+      color: rgba(212, 203, 196, 0.5) !important;
+    }
+
+    /* Glass on language cards */
+    .lang-card {
+      background: rgba(72, 24, 47, 0.04) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(72, 24, 47, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lang-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(72,24,47,0.15) 30%, rgba(72,24,47,0.08) 70%, transparent);
+    }
+
+    /* ========== HORIZONTAL SCROLL GALLERY ========== */
+    #proyectos {
+      overflow: hidden;
+      padding-bottom: 4rem;
+    }
+
+    .h-scroll-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .h-scroll-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .h-scroll-track {
+      display: flex;
+      gap: 1rem;
+      transition: transform 0.1s linear;
+      will-change: transform;
+      padding: 1rem 0;
+    }
+
+    .h-scroll-track .project-card {
+      min-width: 300px;
+      max-width: 300px;
+      aspect-ratio: 1/1;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .h-scroll-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-top: 2rem;
+      color: var(--cream-dark);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .h-scroll-hint svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--wine);
+      fill: none;
+      stroke-width: 2;
+      animation: scrollHintBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollHintBounce {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(8px); }
+    }
+
+    @media (max-width: 768px) {
+      .h-scroll-track .project-card {
+        min-width: 250px;
+        max-width: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- PRELOADER -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-text" id="preloaderText"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">ASC</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#proyectos" data-i18n="nav_projects">Proyectos</a></li>
+        <li><a href="#experiencia" data-i18n="nav_experience">Experiencia</a></li>
+        <li><a href="#sobre-mi" data-i18n="nav_about">Sobre mí</a></li>
+        <li><a href="#moda" data-i18n="nav_fashion">Moda</a></li>
+        <li><a href="#contacto" data-i18n="nav_contact">Contacto</a></li>
+      </ul>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#proyectos" class="mobile-nav-link" data-i18n-mobile="nav_projects">Proyectos</a>
+    <a href="#experiencia" class="mobile-nav-link" data-i18n-mobile="nav_experience">Experiencia</a>
+    <a href="#sobre-mi" class="mobile-nav-link" data-i18n-mobile="nav_about">Sobre mí</a>
+    <a href="#moda" class="mobile-nav-link" data-i18n-mobile="nav_fashion">Moda</a>
+    <a href="#contacto" class="mobile-nav-link" data-i18n-mobile="nav_contact">Contacto</a>
+    <div class="mobile-lang-switcher">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <canvas id="particleCanvas"></canvas>
+    <div class="aurora-noise"></div>
+    <p class="hero-subtitle reveal" data-i18n="hero_subtitle">Portfolio — Marketing Digital</p>
+    <h1 class="hero-name reveal">Andrea<br><span class="accent">Saldarriaga</span></h1>
+    <p class="hero-tagline reveal" data-i18n="hero_tagline">Creando estrategias visuales que conectan marcas con personas. Diseño, contenido y
+      comunicación digital con impacto.</p>
+    <div class="hero-scroll-indicator">
+      <span data-i18n="scroll">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+
+
+
+  <div class="color-strip"></div>
+
+
+  <!-- STATS -->
+  <div class="stats-strip">
+    <div class="stat-item reveal">
+      <div class="stat-number" data-target="15">0</div>
+      <div class="stat-label" data-i18n="stat_projects">Proyectos</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" data-target="3">0</div>
+      <div class="stat-label" data-i18n="stat_years">Años experiencia</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" data-target="10">0</div>
+      <div class="stat-label" data-i18n="stat_clients">Clientes</div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <section id="experiencia">
+    <div class="exp-header">
+      <p class="section-label reveal" data-i18n="exp_label">Trayectoria profesional</p>
+      <h2 class="section-title reveal"><span data-i18n="exp_title_1">Donde he</span> <span style="color:var(--cream)" data-i18n="exp_title_2">dejado huella</span></h2>
+      <p class="section-subtitle reveal" data-i18n="exp_subtitle">Mi evolución profesional en Almacenes HJ — de analista de contenido a estratega digital integral.</p>
+    </div>
+
+    <div class="exp-timeline">
+
+      <div class="exp-item reveal">
+        <div class="exp-company">
+          <h3 class="exp-company-name">Almacenes HJ</h3>
+          <p class="exp-role" data-i18n="exp1_role">Analista de Contenido y Métricas</p>
+          <p class="exp-date" data-i18n="exp1_date">Inicio 2024</p>
+        </div>
+        <div class="exp-dot-col"><div class="exp-dot"></div></div>
+        <div class="exp-details">
+          <p class="exp-description" data-i18n="exp1_desc">Elaboración de reportes sobre el rendimiento de posts en redes sociales. Seguimiento de métricas clave como alcance, engagement y CTR. Creación de dashboards en Excel y Looker Studio.</p>
+          <div class="exp-tags">
+            <span class="exp-tag">Reporting</span>
+            <span class="exp-tag">Looker Studio</span>
+            <span class="exp-tag">Excel</span>
+            <span class="exp-tag">Analytics</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-company">
+          <h3 class="exp-company-name">Almacenes HJ</h3>
+          <p class="exp-role" data-i18n="exp2_role">Paid Media & Campañas Digitales</p>
+          <p class="exp-date">2024</p>
+        </div>
+        <div class="exp-dot-col"><div class="exp-dot"></div></div>
+        <div class="exp-details">
+          <p class="exp-description" data-i18n="exp2_desc">Planificación y optimización de campañas de paid media. Apoyo en campañas de Google Ads y Meta Ads. Definición de segmentación, objetivos y presupuestos. Monitorización de KPIs: CTR, CPA y ROAS.</p>
+          <div class="exp-tags">
+            <span class="exp-tag">Google Ads</span>
+            <span class="exp-tag">Meta Ads</span>
+            <span class="exp-tag">Segmentación</span>
+            <span class="exp-tag">KPIs</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-company">
+          <h3 class="exp-company-name">Expocamacol 2024</h3>
+          <p class="exp-role" data-i18n="exp3_role">Coordinación de Evento & Campañas</p>
+          <p class="exp-date" data-i18n="exp3_date">Agosto 2024</p>
+        </div>
+        <div class="exp-dot-col"><div class="exp-dot"></div></div>
+        <div class="exp-details">
+          <p class="exp-description" data-i18n="exp3_desc">Participación en el diseño conceptual del stand de Almacenes HJ. Coordinación con proveedores y logística del evento. Planificación de campañas de paid media para promocionar la presencia en feria. Seguimiento del rendimiento durante el evento.</p>
+          <div class="exp-tags">
+            <span class="exp-tag">Eventos</span>
+            <span class="exp-tag">Stand Design</span>
+            <span class="exp-tag">Paid Media</span>
+            <span class="exp-tag">Logística</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-company">
+          <h3 class="exp-company-name">Almacenes HJ</h3>
+          <p class="exp-role" data-i18n="exp4_role">Gestión Comercial & Business Intelligence</p>
+          <p class="exp-date">2024 — 2025</p>
+        </div>
+        <div class="exp-dot-col"><div class="exp-dot"></div></div>
+        <div class="exp-details">
+          <p class="exp-description" data-i18n="exp4_desc">Uso de SAP para consulta y seguimiento de datos comerciales. Análisis de inventario, ventas y productos. Elaboración de informes estratégicos para el equipo comercial.</p>
+          <div class="exp-tags">
+            <span class="exp-tag">SAP</span>
+            <span class="exp-tag">Business Intelligence</span>
+            <span class="exp-tag">Análisis Comercial</span>
+            <span class="exp-tag">Reporting</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-company">
+          <h3 class="exp-company-name">Almacenes HJ</h3>
+          <p class="exp-role" data-i18n="exp5_role">Estratega Digital & Colaboración Transversal</p>
+          <p class="exp-date" data-i18n="exp5_date">2025 — Presente</p>
+        </div>
+        <div class="exp-dot-col"><div class="exp-dot"></div></div>
+        <div class="exp-details">
+          <p class="exp-description" data-i18n="exp5_desc">Evaluación de resultados de campañas y eventos. Creación de dashboards de marketing y reporting avanzado. Apoyo en planificación de nuevas estrategias digitales y colaboración transversal entre departamentos.</p>
+          <div class="exp-tags">
+            <span class="exp-tag">Estrategia Digital</span>
+            <span class="exp-tag">Dashboards</span>
+            <span class="exp-tag">Marketing</span>
+            <span class="exp-tag">Planificación</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <div class="color-strip"></div>
+
+
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span>Marketing Digital</span><span class="dot">✦</span>
+      <span>Branding</span><span class="dot">✦</span>
+      <span>Social Media</span><span class="dot">✦</span>
+      <span>Content Design</span><span class="dot">✦</span>
+      <span>Estrategia</span><span class="dot">✦</span>
+      <span>UX/UI</span><span class="dot">✦</span>
+      <span>Creatividad</span><span class="dot">✦</span>
+      <span>Marketing Digital</span><span class="dot">✦</span>
+      <span>Branding</span><span class="dot">✦</span>
+      <span>Social Media</span><span class="dot">✦</span>
+      <span>Content Design</span><span class="dot">✦</span>
+      <span>Estrategia</span><span class="dot">✦</span>
+      <span>UX/UI</span><span class="dot">✦</span>
+      <span>Creatividad</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+
+  <!-- ABOUT -->
+  <section id="sobre-mi">
+    <div class="about-grid">
+      <div class="about-image-wrapper reveal-left">
+        <img src="img/Foto.jpg" alt="Andrea Saldarriaga Cadavid">
+      </div>
+      <div class="about-text reveal-right">
+        <p class="section-label" data-i18n="about_label">Sobre mí</p>
+        <h2 class="section-title"><span data-i18n="about_hello">Hola, soy</span> <span class="accent">Andrea</span></h2>
+        <p class="about-description" data-i18n="about_p1">
+          Soy una persona curiosa por naturaleza y siempre me ha interesado entender cómo piensan las personas, qué las inspira y por qué conectan con ciertas marcas. Por eso decidí estudiar Marketing y Dirección Comercial en la UCAM, donde descubrí que lo que más me apasiona es gestionar y desarrollar una marca: desde analizar al consumidor, el mercado y los consumer insights, hasta transformar esa información en estrategias y campañas con impacto.
+        </p>
+        <p class="about-description" data-i18n="about_p2">
+          Me considero una persona organizada, persistente y muy orientada al aprendizaje. Disfruto trabajar con datos, analizar resultados y entender qué hay detrás de cada decisión estratégica, identificando oportunidades de mejora.
+        </p>
+        <p class="about-description" data-i18n="about_p3">
+          Valoro mucho aprender de distintas perspectivas y trabajar en equipo. Cuando un proyecto lo requiere, me gusta tomar iniciativa y asumir un rol de liderazgo para organizar el trabajo y convertir las ideas en resultados.
+        </p>
+        <p class="about-description" data-i18n="about_p4">
+          Actualmente me encuentro en una etapa de crecimiento en la que quiero seguir aprendiendo, explorar nuevas industrias y continuar desarrollándome profesionalmente, aportando análisis, ideas y compromiso a los proyectos en los que participe.
+        </p>
+        <div class="skills-list">
+          <span class="skill-tag">Google Ads</span>
+          <span class="skill-tag">Meta Ads</span>
+          <span class="skill-tag">Excel Avanzado</span>
+          <span class="skill-tag">IBM SPSS Statistics</span>
+          <span class="skill-tag">Looker Studio</span>
+          <span class="skill-tag">Campaign Performance Tracking</span>
+          <span class="skill-tag">Canva</span>
+          <span class="skill-tag">CapCut</span>
+          <span class="skill-tag">Adobe Photoshop</span>
+          <span class="skill-tag">Adobe Lightroom</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- LANGUAGES -->
+  <section class="languages-section">
+    <div class="languages-header">
+      <p class="section-label reveal" data-i18n="lang_label">Idiomas</p>
+      <h2 class="section-title reveal" data-i18n="lang_title">Comunicación sin fronteras</h2>
+    </div>
+    <div class="languages-grid">
+      <div class="lang-card reveal">
+        <span class="lang-flag">🇪🇸</span>
+        <h3 class="lang-name" data-i18n="lang_es_name">Español</h3>
+        <p class="lang-level" data-i18n="lang_es_level">Nativo</p>
+        <div class="lang-bar-track"><div class="lang-bar-fill" data-width="100"></div></div>
+        <p class="lang-cert" data-i18n="lang_es_cert">Lengua materna</p>
+      </div>
+      <div class="lang-card reveal">
+        <span class="lang-flag">🇬🇧</span>
+        <h3 class="lang-name" data-i18n="lang_en_name">Inglés</h3>
+        <p class="lang-level" data-i18n="lang_en_level">Avanzado · C1</p>
+        <div class="lang-bar-track"><div class="lang-bar-fill" data-width="90"></div></div>
+        <p class="lang-cert" data-i18n="lang_en_cert">Certificación IELTS</p>
+      </div>
+      <div class="lang-card reveal">
+        <span class="lang-flag">🇫🇷</span>
+        <h3 class="lang-name" data-i18n="lang_fr_name">Francés</h3>
+        <p class="lang-level" data-i18n="lang_fr_level">Intermedio · B2</p>
+        <div class="lang-bar-track"><div class="lang-bar-fill" data-width="65"></div></div>
+        <p class="lang-cert" data-i18n="lang_fr_cert">Nivel B2</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================== -->
+  <!-- FASHION JOURNAL SECTION        -->
+  <!-- ============================== -->
+  <section class="fashion-showcase" id="moda">
+    <div class="fashion-showcase-header">
+      <p class="section-label reveal">Fashion Journal</p>
+      <h2 class="section-title reveal">Mi pasión por la <span style="color:var(--wine)">moda</span></h2>
+      <p class="section-subtitle reveal">Proyectos académicos que reflejan mi formación en marketing y mi pasión por la moda.</p>
+    </div>
+
+    <div class="fashion-slide reveal-scale"><img src="img/fashion-1.jpg" alt="Fashion Journal"></div>
+    <div class="fashion-slide reveal-scale"><img src="img/fashion-2.jpg" alt="Moda al rededor del mundo"></div>
+    <div class="fashion-slide reveal-scale"><img src="img/fashion-3.jpg" alt="One Dilemma - Merchandising"></div>
+    <div class="fashion-slide reveal-scale"><img src="img/fashion-4.jpg" alt="One Dilemma - Planos"></div>
+    <div class="fashion-slide reveal-scale"><img src="img/fashion-5.jpg" alt="One Dilemma - Escaparate"></div>
+    <div class="fashion-slide reveal-scale"><img src="img/fashion-6.jpg" alt="MAEVA"></div>
+    <div class="fashion-slide reveal-scale"><img src="img/fashion-7.jpg" alt="MAEVA - Colección"></div>
+  </section>
+
+  <div class="color-strip"></div>
+
+
+  <!-- PROJECTS -->
+  <section id="proyectos">
+    <div class="gallery-header">
+      <p class="section-label reveal" data-i18n="proj_label">Trabajos seleccionados</p>
+      <h2 class="section-title reveal"><span data-i18n="proj_title_1">Proyectos</span> <span style="color:var(--wine)" data-i18n="proj_title_2">destacados</span></h2>
+      <p class="section-subtitle reveal" data-i18n="proj_subtitle">Una selección de mis mejores trabajos en diseño, estrategia y comunicación
+        digital.</p>
+    </div>
+
+    <div class="h-scroll-wrapper" id="hScrollWrapper">
+      <div class="h-scroll-track" id="hScrollTrack">
+      <!--
+      ╔══════════════════════════════════════════════════════════╗
+      ║  PARA AÑADIR / QUITAR PROYECTOS:                       ║
+      ║                                                         ║
+      ║  1. Copia un bloque <div class="project-card ...">     ║
+      ║  2. Cambia el src="" por tu imagen                      ║
+      ║  3. Edita el <h3> y <span class="tag">                ║
+      ║  4. Para quitar, elimina el bloque completo            ║
+      ║                                                         ║
+      ║  El grid se adapta automáticamente                     ║
+      ╚══════════════════════════════════════════════════════════╝
+    -->
+
+      <div class="project-card reveal-scale">
+        <img src="img/1.jpg" alt="Panorámica costera bajo la luz cálida del atardecer.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/2.jpg" alt="Calma minimalista en el horizonte marino.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/3.jpg" alt="Bodegón artesanal en mercado rústico.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/4.jpg" alt="Silueta ecuestre contra un cielo crepuscular en tonos violeta.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/5.jpg" alt="Fachadas clásicas reflejadas sobre el río.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/6.jpg" alt="Arquitectura mediterránea en contraste con el azul profundo.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/7.jpg" alt="Composición geométrica de arquitectura urbana.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/8.jpg" alt="Juego de sombras y luz dorada en callejón antiguo.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/9.jpg" alt="Arcos históricos de piedra bajo el sol de justicia.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/10.jpg" alt="Explosión de color en vestimenta tradicional folclórica.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/11.jpg" alt="Escena costumbrista en patio de colores vibrantes.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/12.jpg" alt="Cúpula solitaria bajo la primera luz de la luna.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/13.jpg" alt="Atardecer encendido sobre silueta de paisaje natural.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/14.jpg" alt="Textura acuática y serenidad: un ánade en calma.">
+      </div>
+
+      <div class="project-card reveal-scale">
+        <img src="img/15.jpg" alt="Arcoíris efímero en la bruma de una fuente monumental.">
+      </div>
+      </div>
+    </div>
+    <div class="h-scroll-hint reveal">
+      <span>Desliza para ver más</span>
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+  </section>
+
+
+  <!-- CONTACT -->
+  <section id="contacto">
+    <p class="section-label reveal" data-i18n="contact_label">¿Conectamos?</p>
+    <h2 class="contact-big-text reveal"><span data-i18n="contact_title_1">Hagamos algo</span><br><span class="accent" data-i18n="contact_title_2">increíble</span> <span data-i18n="contact_title_3">juntos</span></h2>
+    <a href="mailto:asadarriaga@alu.ucam.edu" class="contact-email reveal">asadarriaga@alu.ucam.edu</a>
+    <div class="social-links reveal">
+      <a href="https://www.linkedin.com/in/andrea-saldarriagac/?locale=es_ES" class="social-link" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/lucky_archivess/" class="social-link" aria-label="Instagram">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Andrea Saldarriaga Cadavid</span>
+    <span><span data-i18n="footer_made">Hecho con</span> <span class="heart">♥</span> <span data-i18n="footer_coffee">y mucho café</span></span>
+  </footer>
+
+
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    // ---- PRELOADER ----
+    const preloaderName = "ANDREA SALDARRIAGA";
+    const preloaderEl = document.getElementById('preloaderText');
+    preloaderName.split('').forEach((char, i) => {
+      const span = document.createElement('span');
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      span.style.animationDelay = `${i * 0.04}s`;
+      preloaderEl.appendChild(span);
+    });
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('preloader').classList.add('hidden');
+      }, 1400);
+    });
+
+    // ---- CUSTOM CURSOR ----
+    const dot = document.querySelector('.cursor-dot');
+    const ring = document.querySelector('.cursor-ring');
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    const hoverTargets = document.querySelectorAll('a, button, .project-card, .skill-tag, .social-link, .exp-tag');
+    hoverTargets.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        dot.classList.add('hovering');
+        ring.classList.add('hovering');
+      });
+      el.addEventListener('mouseleave', () => {
+        dot.classList.remove('hovering');
+        ring.classList.remove('hovering');
+      });
+    });
+
+    // ---- SCROLL REVEAL ----
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ---- STAGGER GALLERY ITEMS ----
+    const galleryCards = document.querySelectorAll('.project-card');
+    galleryCards.forEach((card, i) => {
+      card.style.transitionDelay = `${(i % 6) * 0.08}s`;
+    });
+
+    // ---- NUMBER COUNTER ----
+    const statNumbers = document.querySelectorAll('.stat-number');
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.target);
+          let current = 0;
+          const increment = target / 40;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              el.textContent = target + '+';
+              clearInterval(timer);
+            } else {
+              el.textContent = Math.floor(current);
+            }
+          }, 40);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statNumbers.forEach(el => counterObserver.observe(el));
+
+    // ---- SMOOTH ANCHOR SCROLL ----
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ---- PARALLAX HERO ----
+    window.addEventListener('scroll', () => {
+      const hero = document.querySelector('.hero');
+      const scrolled = window.pageYOffset;
+      if (scrolled < window.innerHeight) {
+        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+        hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.6;
+      }
+    });
+
+    // ---- NAV HIDE ON SCROLL ----
+    let lastScroll = 0;
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > lastScroll && currentScroll > 100) {
+        navEl.style.transform = 'translateY(-100%)';
+        navEl.style.transition = 'transform 0.4s ease';
+      } else {
+        navEl.style.transform = 'translateY(0)';
+      }
+      lastScroll = currentScroll;
+    });
+
+    // ---- TILT EFFECT ON PROJECT CARDS ----
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 18;
+        const rotateY = (centerX - x) / 18;
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        card.style.boxShadow = `0 20px 40px rgba(72, 24, 47, 0.15)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+        card.style.boxShadow = 'none';
+        card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease';
+      });
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'box-shadow 0.3s ease';
+      });
+    });
+
+    // ---- EXPERIENCE ITEMS STAGGER ----
+    const expItems = document.querySelectorAll('.exp-item');
+    expItems.forEach((item, i) => {
+      item.style.transitionDelay = `${i * 0.15}s`;
+    });
+
+    // ---- PARTICLE SYSTEM (Hero) ----
+    const pCanvas = document.getElementById('particleCanvas');
+    if (pCanvas) {
+      const pCtx = pCanvas.getContext('2d');
+      let particles = [];
+      const pMouse = { x: null, y: null, radius: 150 };
+      const pCount = window.innerWidth < 768 ? 50 : 100;
+
+      function pResize() {
+        const hero = document.getElementById('hero');
+        pCanvas.width = hero.offsetWidth;
+        pCanvas.height = hero.offsetHeight;
+      }
+      pResize();
+
+      for (let i = 0; i < pCount; i++) {
+        particles.push({
+          x: Math.random() * pCanvas.width,
+          y: Math.random() * pCanvas.height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          size: Math.random() * 2 + 0.5,
+          opacity: Math.random() * 0.4 + 0.1,
+        });
+      }
+
+      function pAnimate() {
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        particles.forEach(p => {
+          if (pMouse.x) {
+            const dx = p.x - pMouse.x;
+            const dy = p.y - pMouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < pMouse.radius) {
+              const force = (pMouse.radius - dist) / pMouse.radius;
+              p.vx += (dx / dist) * force * 0.6;
+              p.vy += (dy / dist) * force * 0.6;
+            }
+          }
+          p.vx *= 0.99;
+          p.vy *= 0.99;
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = pCanvas.width;
+          if (p.x > pCanvas.width) p.x = 0;
+          if (p.y < 0) p.y = pCanvas.height;
+          if (p.y > pCanvas.height) p.y = 0;
+          pCtx.beginPath();
+          pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          pCtx.fillStyle = `rgba(212, 203, 196, ${p.opacity})`;
+          pCtx.fill();
+        });
+        // Connect nearby particles
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 110) {
+              pCtx.beginPath();
+              pCtx.strokeStyle = `rgba(212, 203, 196, ${0.08 * (1 - dist / 110)})`;
+              pCtx.lineWidth = 0.5;
+              pCtx.moveTo(particles[i].x, particles[i].y);
+              pCtx.lineTo(particles[j].x, particles[j].y);
+              pCtx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(pAnimate);
+      }
+      pAnimate();
+
+      document.getElementById('hero').addEventListener('mousemove', e => {
+        const rect = pCanvas.getBoundingClientRect();
+        pMouse.x = e.clientX - rect.left;
+        pMouse.y = e.clientY - rect.top;
+      });
+      document.getElementById('hero').addEventListener('mouseleave', () => {
+        pMouse.x = null;
+        pMouse.y = null;
+      });
+      window.addEventListener('resize', pResize);
+    }
+
+    // ---- HORIZONTAL SCROLL GALLERY ----
+    const hWrapper = document.getElementById('hScrollWrapper');
+    const hTrack = document.getElementById('hScrollTrack');
+    if (hWrapper && hTrack) {
+      // Drag to scroll
+      let isDragging = false;
+      let startX, scrollLeft;
+
+      hWrapper.addEventListener('mousedown', e => {
+        isDragging = true;
+        hWrapper.style.cursor = 'grabbing';
+        startX = e.pageX - hWrapper.offsetLeft;
+        scrollLeft = hWrapper.scrollLeft;
+      });
+      hWrapper.addEventListener('mouseleave', () => { isDragging = false; hWrapper.style.cursor = 'grab'; });
+      hWrapper.addEventListener('mouseup', () => { isDragging = false; hWrapper.style.cursor = 'grab'; });
+      hWrapper.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - hWrapper.offsetLeft;
+        hWrapper.scrollLeft = scrollLeft - (x - startX) * 1.5;
+      });
+
+      // Enable native horizontal scroll on the wrapper
+      hWrapper.style.overflowX = 'auto';
+      hWrapper.style.cursor = 'grab';
+      hWrapper.style.scrollbarWidth = 'none';
+      hWrapper.style.msOverflowStyle = 'none';
+
+      // Convert vertical wheel to horizontal scroll
+      hWrapper.addEventListener('wheel', e => {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          e.preventDefault();
+          hWrapper.scrollLeft += e.deltaY * 1.5;
+        }
+      }, { passive: false });
+    }
+
+    // ---- LANGUAGE BARS ANIMATION ----
+    const langBars = document.querySelectorAll('.lang-bar-fill');
+    const langObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bar = entry.target;
+          bar.style.width = bar.dataset.width + '%';
+          langObserver.unobserve(bar);
+        }
+      });
+    }, { threshold: 0.5 });
+    langBars.forEach(bar => langObserver.observe(bar));
+
+    // ---- HAMBURGER MENU ----
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          setTimeout(() => {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 300);
+        }
+      });
+    });
+
+    // ---- TRANSLATION SYSTEM ----
+    const translations = {
+      es: {
+        nav_projects: 'Proyectos', nav_experience: 'Experiencia', nav_about: 'Sobre mí', nav_fashion: 'Moda', nav_contact: 'Contacto',
+        hero_subtitle: 'Portfolio — Marketing Digital',
+        hero_tagline: 'Creando estrategias visuales que conectan marcas con personas. Diseño, contenido y comunicación digital con impacto.',
+        scroll: 'Scroll',
+        stat_projects: 'Proyectos', stat_years: 'Años experiencia', stat_clients: 'Clientes',
+        proj_label: 'Trabajos seleccionados', proj_title_1: 'Proyectos', proj_title_2: 'destacados',
+        proj_subtitle: 'Una selección de mis mejores trabajos en diseño, estrategia y comunicación digital.',
+        exp_label: 'Trayectoria profesional', exp_title_1: 'Donde he', exp_title_2: 'dejado huella',
+        exp_subtitle: 'Mi evolución profesional en Almacenes HJ — de analista de contenido a estratega digital integral.',
+        exp1_role: 'Analista de Contenido y Métricas', exp1_date: 'Inicio 2024',
+        exp1_desc: 'Elaboración de reportes sobre el rendimiento de posts en redes sociales. Seguimiento de métricas clave como alcance, engagement y CTR. Creación de dashboards en Excel y Looker Studio.',
+        exp2_role: 'Paid Media & Campañas Digitales',
+        exp2_desc: 'Planificación y optimización de campañas de paid media. Apoyo en campañas de Google Ads y Meta Ads. Definición de segmentación, objetivos y presupuestos. Monitorización de KPIs: CTR, CPA y ROAS.',
+        exp3_role: 'Coordinación de Evento & Campañas', exp3_date: 'Agosto 2024',
+        exp3_desc: 'Participación en el diseño conceptual del stand de Almacenes HJ. Coordinación con proveedores y logística del evento. Planificación de campañas de paid media para promocionar la presencia en feria. Seguimiento del rendimiento durante el evento.',
+        exp4_role: 'Gestión Comercial & Business Intelligence',
+        exp4_desc: 'Uso de SAP para consulta y seguimiento de datos comerciales. Análisis de inventario, ventas y productos. Elaboración de informes estratégicos para el equipo comercial.',
+        exp5_role: 'Estratega Digital & Colaboración Transversal', exp5_date: '2025 — Presente',
+        exp5_desc: 'Evaluación de resultados de campañas y eventos. Creación de dashboards de marketing y reporting avanzado. Apoyo en planificación de nuevas estrategias digitales y colaboración transversal entre departamentos.',
+        about_label: 'Sobre mí', about_hello: 'Hola, soy',
+        about_p1: 'Soy una persona curiosa por naturaleza y siempre me ha interesado entender cómo piensan las personas, qué las inspira y por qué conectan con ciertas marcas. Por eso decidí estudiar Marketing y Dirección Comercial en la UCAM, donde descubrí que lo que más me apasiona es gestionar y desarrollar una marca: desde analizar al consumidor, el mercado y los consumer insights, hasta transformar esa información en estrategias y campañas con impacto.',
+        about_p2: 'Me considero una persona organizada, persistente y muy orientada al aprendizaje. Disfruto trabajar con datos, analizar resultados y entender qué hay detrás de cada decisión estratégica, identificando oportunidades de mejora.',
+        about_p3: 'Valoro mucho aprender de distintas perspectivas y trabajar en equipo. Cuando un proyecto lo requiere, me gusta tomar iniciativa y asumir un rol de liderazgo para organizar el trabajo y convertir las ideas en resultados.',
+        about_p4: 'Actualmente me encuentro en una etapa de crecimiento en la que quiero seguir aprendiendo, explorar nuevas industrias y continuar desarrollándome profesionalmente, aportando análisis, ideas y compromiso a los proyectos en los que participe.',
+        lang_label: 'Idiomas', lang_title: 'Comunicación sin fronteras',
+        lang_es_name: 'Español', lang_es_level: 'Nativo', lang_es_cert: 'Lengua materna',
+        lang_en_name: 'Inglés', lang_en_level: 'Avanzado · C1', lang_en_cert: 'Certificación IELTS',
+        lang_fr_name: 'Francés', lang_fr_level: 'Intermedio · B2', lang_fr_cert: 'Nivel B2',
+        contact_label: '¿Conectamos?', contact_title_1: 'Hagamos algo', contact_title_2: 'increíble', contact_title_3: 'juntos',
+        footer_made: 'Hecho con', footer_coffee: 'y mucho café',
+      },
+      en: {
+        nav_projects: 'Projects', nav_experience: 'Experience', nav_about: 'About me', nav_fashion: 'Fashion', nav_contact: 'Contact',
+        hero_subtitle: 'Portfolio — Digital Marketing',
+        hero_tagline: 'Creating visual strategies that connect brands with people. Design, content and digital communication with impact.',
+        scroll: 'Scroll',
+        stat_projects: 'Projects', stat_years: 'Years experience', stat_clients: 'Clients',
+        proj_label: 'Selected work', proj_title_1: 'Featured', proj_title_2: 'projects',
+        proj_subtitle: 'A selection of my best work in design, strategy and digital communication.',
+        exp_label: 'Professional path', exp_title_1: 'Where I\'ve', exp_title_2: 'left my mark',
+        exp_subtitle: 'My professional evolution at Almacenes HJ — from content analyst to integral digital strategist.',
+        exp1_role: 'Content & Metrics Analyst', exp1_date: 'Early 2024',
+        exp1_desc: 'Preparation of reports on social media post performance. Tracking key metrics such as reach, engagement and CTR. Creation of dashboards in Excel and Looker Studio.',
+        exp2_role: 'Paid Media & Digital Campaigns',
+        exp2_desc: 'Planning and optimization of paid media campaigns. Support in Google Ads and Meta Ads campaigns. Definition of targeting, objectives and budgets. KPI monitoring: CTR, CPA and ROAS.',
+        exp3_role: 'Event Coordination & Campaigns', exp3_date: 'August 2024',
+        exp3_desc: 'Participation in the conceptual design of the Almacenes HJ stand. Coordination with suppliers and event logistics. Planning paid media campaigns to promote trade fair presence. Performance tracking during the event.',
+        exp4_role: 'Commercial Management & Business Intelligence',
+        exp4_desc: 'Use of SAP for commercial data consultation and tracking. Inventory, sales and product analysis. Preparation of strategic reports for the commercial team.',
+        exp5_role: 'Digital Strategist & Cross-functional Collaboration', exp5_date: '2025 — Present',
+        exp5_desc: 'Evaluation of campaign and event results. Creation of marketing dashboards and advanced reporting. Support in planning new digital strategies and cross-departmental collaboration.',
+        about_label: 'About me', about_hello: 'Hi, I\'m',
+        about_p1: 'I\'m a naturally curious person and I\'ve always been interested in understanding how people think, what inspires them, and why they connect with certain brands. That\'s why I decided to study Marketing and Business Management at UCAM, where I discovered that what I\'m most passionate about is managing and developing a brand: from analyzing the consumer, the market and consumer insights, to transforming that information into strategies and campaigns with impact.',
+        about_p2: 'I consider myself an organized, persistent person who is very learning-oriented. I enjoy working with data, analyzing results and understanding what lies behind each strategic decision, identifying opportunities for improvement.',
+        about_p3: 'I truly value learning from different perspectives and working as a team. When a project requires it, I like to take initiative and assume a leadership role to organize the work and turn ideas into results.',
+        about_p4: 'I\'m currently at a stage of growth where I want to keep learning, explore new industries and continue developing professionally, bringing analysis, ideas and commitment to the projects I participate in.',
+        lang_label: 'Languages', lang_title: 'Communication without borders',
+        lang_es_name: 'Spanish', lang_es_level: 'Native', lang_es_cert: 'Mother tongue',
+        lang_en_name: 'English', lang_en_level: 'Advanced · C1', lang_en_cert: 'IELTS Certification',
+        lang_fr_name: 'French', lang_fr_level: 'Intermediate · B2', lang_fr_cert: 'B2 Level',
+        contact_label: 'Shall we connect?', contact_title_1: 'Let\'s create something', contact_title_2: 'amazing', contact_title_3: 'together',
+        footer_made: 'Made with', footer_coffee: 'and lots of coffee',
+      },
+      fr: {
+        nav_projects: 'Projets', nav_experience: 'Expérience', nav_about: 'À propos', nav_fashion: 'Mode', nav_contact: 'Contact',
+        hero_subtitle: 'Portfolio — Marketing Digital',
+        hero_tagline: 'Créer des stratégies visuelles qui connectent les marques aux personnes. Design, contenu et communication digitale à fort impact.',
+        scroll: 'Défiler',
+        stat_projects: 'Projets', stat_years: 'Ans d\'expérience', stat_clients: 'Clients',
+        proj_label: 'Travaux sélectionnés', proj_title_1: 'Projets', proj_title_2: 'en vedette',
+        proj_subtitle: 'Une sélection de mes meilleurs travaux en design, stratégie et communication digitale.',
+        exp_label: 'Parcours professionnel', exp_title_1: 'Là où j\'ai', exp_title_2: 'laissé ma marque',
+        exp_subtitle: 'Mon évolution professionnelle chez Almacenes HJ — d\'analyste de contenu à stratège digital intégral.',
+        exp1_role: 'Analyste de Contenu et Métriques', exp1_date: 'Début 2024',
+        exp1_desc: 'Élaboration de rapports sur la performance des publications sur les réseaux sociaux. Suivi des métriques clés comme la portée, l\'engagement et le CTR. Création de tableaux de bord sur Excel et Looker Studio.',
+        exp2_role: 'Paid Media & Campagnes Digitales',
+        exp2_desc: 'Planification et optimisation des campagnes de paid media. Support pour les campagnes Google Ads et Meta Ads. Définition du ciblage, des objectifs et des budgets. Suivi des KPIs: CTR, CPA et ROAS.',
+        exp3_role: 'Coordination d\'Événements & Campagnes', exp3_date: 'Août 2024',
+        exp3_desc: 'Participation à la conception du stand d\'Almacenes HJ. Coordination avec les fournisseurs et logistique de l\'événement. Planification de campagnes de paid media pour promouvoir la présence au salon. Suivi des performances pendant l\'événement.',
+        exp4_role: 'Gestion Commerciale & Business Intelligence',
+        exp4_desc: 'Utilisation de SAP pour la consultation et le suivi des données commerciales. Analyse des stocks, des ventes et des produits. Élaboration de rapports stratégiques pour l\'équipe commerciale.',
+        exp5_role: 'Stratège Digital & Collaboration Transversale', exp5_date: '2025 — Présent',
+        exp5_desc: 'Évaluation des résultats des campagnes et événements. Création de tableaux de bord marketing et reporting avancé. Soutien à la planification de nouvelles stratégies digitales et collaboration entre départements.',
+        about_label: 'À propos', about_hello: 'Bonjour, je suis',
+        about_p1: 'Je suis une personne naturellement curieuse et j\'ai toujours été intéressée par comprendre comment les gens pensent, ce qui les inspire et pourquoi ils se connectent à certaines marques. C\'est pourquoi j\'ai décidé d\'étudier le Marketing et la Direction Commerciale à l\'UCAM, où j\'ai découvert que ce qui me passionne le plus, c\'est gérer et développer une marque: de l\'analyse du consommateur, du marché et des consumer insights, à la transformation de ces informations en stratégies et campagnes à fort impact.',
+        about_p2: 'Je me considère comme une personne organisée, persévérante et très orientée vers l\'apprentissage. J\'aime travailler avec des données, analyser des résultats et comprendre ce qui se cache derrière chaque décision stratégique, en identifiant les opportunités d\'amélioration.',
+        about_p3: 'J\'accorde beaucoup de valeur à l\'apprentissage de perspectives différentes et au travail en équipe. Quand un projet l\'exige, j\'aime prendre l\'initiative et assumer un rôle de leadership pour organiser le travail et transformer les idées en résultats.',
+        about_p4: 'Je suis actuellement dans une phase de croissance où je souhaite continuer à apprendre, explorer de nouvelles industries et poursuivre mon développement professionnel, en apportant analyse, idées et engagement aux projets auxquels je participe.',
+        lang_label: 'Langues', lang_title: 'Communication sans frontières',
+        lang_es_name: 'Espagnol', lang_es_level: 'Natif', lang_es_cert: 'Langue maternelle',
+        lang_en_name: 'Anglais', lang_en_level: 'Avancé · C1', lang_en_cert: 'Certification IELTS',
+        lang_fr_name: 'Français', lang_fr_level: 'Intermédiaire · B2', lang_fr_cert: 'Niveau B2',
+        contact_label: 'On se connecte ?', contact_title_1: 'Créons quelque chose', contact_title_2: 'd\'incroyable', contact_title_3: 'ensemble',
+        footer_made: 'Fait avec', footer_coffee: 'et beaucoup de café',
+      }
+    };
+
+    function setLanguage(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      // Also translate mobile menu links
+      document.querySelectorAll('[data-i18n-mobile]').forEach(el => {
+        const key = el.dataset.i18nMobile;
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      document.documentElement.lang = lang === 'es' ? 'es' : lang === 'fr' ? 'fr' : 'en';
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+    });
+  </script>
+</body>
+</html>
